@@ -77,7 +77,7 @@ function renderMovie(id, title, image, rating) {
   </div>
   <div class="movie-element__info">
     <h2>${title}</h2>
-    <p>${rating}/5</p>
+    <p>${rating}/5 Stars</p>
   </div>
   `;
   newListElement.addEventListener(
