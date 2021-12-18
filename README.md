@@ -1,4 +1,4 @@
-# udemy-js-projects
+# Udemy Javascript Projects
 A repository of my projects from following Maximilian Schwarzmüller's Complete Javascript Guide
 
 # Section 7: Working with the DOM
