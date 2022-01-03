@@ -51,6 +51,10 @@ button:active {
   border-color: #ff3482;
 }
 
+ul .movie-item {
+  padding: 0.25rem 0;
+}
+
 .card {
   padding: 1rem;
   border-radius: 10px;
@@ -88,4 +92,15 @@ button:active {
   color: #ff0062;
   font-weight: bold;
   font-size: 1.5rem;
+  list-style: none;
+}
+
+#movie-list .movie-title {
+  margin: 1rem 1rem 0.2rem 1rem;
+}
+
+#movie-list .movie-info {
+  font-size: 1.2rem;
+  color: #606060;
+  margin-top: 0;
 }
