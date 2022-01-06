@@ -7,15 +7,48 @@ class Product {
   }
 }
 
-class ProductItem {
-  constructor(product) {
+class ElementAttribute {
+  constructor(attrName, attrValue) {
+    this.name = attrName;
+    this.value = attrValue;
+  }
+}
+
+class Component {
+  constructor(renderHookID, shouldRender = true) {
+    this.hookID = renderHookID;
+    if (shouldRender) {
+      this.render();
+    }
+  }
+
+  render() {}
+
+  createRootElement(tag, cssClass, attributes) {
+    const rootElement = document.createElement(tag);
+    if (cssClass) {
+      rootElement.className = cssClass;
+    }
+    if (attributes && attributes.length > 0) {
+      for (const attr of attributes) {
+        rootElement.setAttribute(attr.name, attr.value);
+      }
+    }
+    document.getElementById(this.hookID).append(rootElement);
+    return rootElement;
+  }
+}
+
+class ProductItem extends Component {
+  constructor(product, renderHookID) {
+    super(renderHookID, false);
     this.product = product;
+    this.render();
   }
 
   render() {
-    const productElement = document.createElement('li');
+    const productElement = this.createRootElement('li', 'product-item');
 
-    productElement.className = 'product-item';
     productElement.innerHTML = `
       <div>
         <img src="${this.product.imageUrl}" alt="${this.product.title}">
@@ -29,72 +62,131 @@ class ProductItem {
 
     const addToCartButton = productElement.querySelector('button');
     addToCartButton.addEventListener('click', this.addToCart.bind(this));
-
-    return productElement;
   }
 
   addToCart() {
-    console.log(this.product);
+    App.addProductToCart(this.product);
   }
 }
 
-class ProductList {
-  products = [
-    new Product(
-      'Nintendo Switch',
-      'https://assets.newatlas.com/dims4/default/c147618/2147483647/strip/true/crop/5889x3926+112+0/resize/1200x800!/quality/90/?url=http:%2F%2Fnewatlas-brightspot.s3.amazonaws.com%2Farchive%2Fswitch-precursors-10.jpg',
-      199.99,
-      'The newest Switch console, by Nintendo!'
-    ),
-    new Product(
-      'Animal Crossing: New Horizons',
-      'https://static.miraheze.org/awesomegameswiki/2/2c/AC-NH-Switch.jpg',
-      39.99,
-      'The best game ever!'
-    ),
-  ];
+class ProductList extends Component {
+  products = [];
+
+  constructor(renderHookID) {
+    super(renderHookID);
+    this.fetchProducts();
+  }
+
+  fetchProducts() {
+    this.products = [
+      new Product(
+        'Nintendo Switch',
+        'https://assets.newatlas.com/dims4/default/c147618/2147483647/strip/true/crop/5889x3926+112+0/resize/1200x800!/quality/90/?url=http:%2F%2Fnewatlas-brightspot.s3.amazonaws.com%2Farchive%2Fswitch-precursors-10.jpg',
+        199.99,
+        'The newest Switch console, by Nintendo!'
+      ),
+      new Product(
+        'Animal Crossing: New Horizons',
+        'https://static.miraheze.org/awesomegameswiki/2/2c/AC-NH-Switch.jpg',
+        39.99,
+        'The best game ever!'
+      ),
+      new Product(
+        'A Punnet of Raspberries',
+        'https://aldprdproductimages.azureedge.net/media/resized/$Aldi_GB/ALL_RESIZED3/4088600081472_0_XL.png',
+        1.24,
+        'Handpicked.'
+      ),
+    ];
+    this.renderProducts();
+  }
+
+  renderProducts() {
+    for (const product of this.products) {
+      new ProductItem(product, 'prod-list');
+    }
+  }
 
   render() {
-    const renderedProductList = document.createElement('ul');
-    renderedProductList.classList = 'product-list';
-
-    for (const product of this.products) {
-      const productItem = new ProductItem(product);
-      const productElement = productItem.render();
-      renderedProductList.append(productElement);
+    this.createRootElement('ul', 'product-list', [
+      new ElementAttribute('id', 'prod-list'),
+    ]);
+    if (this.products && this.products.length > 0) {
+      this.renderProducts();
     }
-    return renderedProductList;
   }
 }
 
-class ShoppingCart {
+class ShoppingCart extends Component {
   items = [];
 
-  render() {
-    const cartElement = document.createElement('section');
+  set cartItems(value) {
+    this.items = value;
+    this.totalOutput.innerHTML = `<h2>Total: £${this.totalAmount.toFixed(
+      2
+    )}</h2>`;
+  }
 
-    cartElement.className = 'cart';
+  get totalAmount() {
+    const sum = this.items.reduce(
+      (previousValue, currentItem) => previousValue + currentItem.price,
+      0
+    );
+
+    return sum;
+  }
+
+  constructor(renderHookID) {
+    super(renderHookID);
+  }
+
+  addProduct(product) {
+    const updatedItems = [...this.items];
+    updatedItems.push(product);
+    this.cartItems = updatedItems;
+  }
+
+  orderProducts() {
+    console.log('Order placed. See items below...');
+    console.log(this.items);
+  }
+
+  render() {
+    const cartElement = this.createRootElement('section', 'cart');
+
     cartElement.innerHTML = `
     <h2>Total: £${0}</h2>
     <button>Order Now</button>
     `;
-    return cartElement;
+    this.totalOutput = cartElement.querySelector('h2');
+
+    const orderButton = cartElement.querySelector('button');
+    orderButton.addEventListener('click', this.orderProducts.bind(this));
   }
 }
 
-class Shop {
+class Shop extends Component {
+  constructor() {
+    super();
+  }
+
   render() {
-    const productApp = document.getElementById('app');
-    const productList = new ProductList();
-    const cart = new ShoppingCart();
-
-    const productListElement = productList.render();
-    const cartElement = cart.render();
-
-    productApp.append(cartElement);
-    productApp.append(productListElement);
+    this.cart = new ShoppingCart('app');
+    new ProductList('app');
   }
 }
 
-const shop = new Shop();
-shop.render();
+class App {
+  static cart;
+
+  static init() {
+    const shop = new Shop();
+    this.cart = shop.cart;
+  }
+
+  static addProductToCart(product) {
+    this.cart.addProduct(product);
+  }
+}
+
+App.init();
