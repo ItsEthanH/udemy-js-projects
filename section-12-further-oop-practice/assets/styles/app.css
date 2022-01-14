@@ -108,6 +108,16 @@ button:active {
   margin: 0;
 }
 
+#active-projects header button {
+  color: white;
+  font-weight: bolder;
+  font-size: 2rem;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
 #finished-projects {
   border: 1px solid #535353;
 }
