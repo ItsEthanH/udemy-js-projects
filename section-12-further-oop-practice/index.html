@@ -9,12 +9,25 @@
     <script src="assets/scripts/app.js" defer></script>
   </head>
   <body>
+    <div id="backdrop"></div>
+
+    <div id="modal" class="card">
+      <h2>Add New Project</h2>
+      <label for="title">Project Title</label>
+      <input type="text" name="title" id="title" />
+      <label for="details">Project Details</label>
+      <input type="text" name="details" id="details" />
+      <button>Save</button>
+      <button class="alt">Close</button>
+    </div>
+
     <header id="main-header">
       <h1>Project Planner</h1>
     </header>
     <section id="active-projects">
       <header>
         <h2>Active Projects</h2>
+        <button>+</button>
       </header>
       <ul>
         <li

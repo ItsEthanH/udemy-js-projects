@@ -138,6 +138,8 @@ class ProjectList {
 
   constructor(type) {
     this.type = type;
+    this.addNewProjectButton = new NewProject(this.type);
+
     const prjItems = document.querySelectorAll(`#${type}-projects li`);
     for (const prjItem of prjItems) {
       this.projects.push(
@@ -159,6 +161,28 @@ class ProjectList {
   switchProject(projectId) {
     this.switchHandler(this.projects.find((p) => p.id === projectId));
     this.projects = this.projects.filter((p) => p.id !== projectId);
+  }
+}
+
+class NewProject {
+  constructor(type) {
+    this.type = type;
+    this.connectNewProjectHandler();
+  }
+
+  connectNewProjectHandler() {
+    const projectList = document.getElementById(`${this.type}-projects`);
+    const newProjectButton = projectList.querySelector('button');
+
+    newProjectButton.addEventListener('click', this.showModal);
+  }
+
+  showModal() {
+    const modal = document.getElementById('modal');
+    const backdrop = document.getElementById('backdrop');
+
+    modal.classList.add('visible');
+    backdrop.classList.add('visible');
   }
 }
 

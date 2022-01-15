@@ -91,6 +91,59 @@ button:active {
   background: white;
 }
 
+#backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 10;
+  pointer-events: none;
+  display: none;
+}
+
+#backdrop.visible {
+  display: block;
+  pointer-events: all;
+}
+
+#modal {
+  position: fixed;
+  z-index: 100;
+  width: 60%;
+  top: 30vh;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2rem;
+  display: none;
+}
+
+#modal.visible {
+  display: block;
+  pointer-events: all;
+}
+
+#modal h2 {
+  text-align: center;
+}
+
+#modal label {
+  font-weight: bold;
+  display: block;
+}
+
+#modal input {
+  width: 90%;
+  margin: 0.4rem 0;
+  font-size: 16px;
+}
+
+#modal button {
+  float: right;
+  margin: 0.4rem 0.2rem;
+}
+
 #active-projects {
   border: 1px solid #870099;
 }
