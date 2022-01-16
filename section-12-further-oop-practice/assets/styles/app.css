@@ -113,15 +113,15 @@ button:active {
   z-index: 100;
   width: 60%;
   top: 30vh;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 2rem;
+  left: 20%;
+  padding: 1rem 3rem;
   display: none;
 }
 
 #modal.visible {
   display: block;
   pointer-events: all;
+  animation: fade-slide-in 0.3s ease-out forwards;
 }
 
 #modal h2 {
@@ -134,7 +134,7 @@ button:active {
 }
 
 #modal input {
-  width: 90%;
+  width: 100%;
   margin: 0.4rem 0;
   font-size: 16px;
 }
@@ -186,4 +186,13 @@ button:active {
 #finished-projects header h2 {
   color: white;
   margin: 0;
+}
+
+@keyframes fade-slide-in {
+  from {
+    transform: translateY(-5rem);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
