@@ -163,84 +163,8 @@ class ProjectList {
   }
 }
 
-class NewProject extends ProjectList {
-  constructor(type) {
-    super(type);
-    this.type = type;
-    this.connectNewProjectHandler();
-    this.closeModalHandler();
-    this.saveButtonHandler();
-  }
-
-  connectNewProjectHandler() {
-    const projectList = document.getElementById(`${this.type}-projects`);
-    const newProjectButton = projectList.querySelector('button');
-
-    newProjectButton.addEventListener('click', this.showModal);
-  }
-
-  showModal() {
-    const modal = document.getElementById('modal');
-    const backdrop = document.getElementById('backdrop');
-
-    modal.classList.add('visible');
-    backdrop.classList.add('visible');
-  }
-
-  closeModalHandler() {
-    const modal = document.getElementById('modal');
-    const closeButton = modal.querySelector('button:last-of-type');
-    const backdrop = document.getElementById('backdrop');
-
-    closeButton.addEventListener('click', this.closeModal);
-    backdrop.addEventListener('click', this.closeModal);
-  }
-
-  closeModal() {
-    const modal = document.getElementById('modal');
-    const backdrop = document.getElementById('backdrop');
-
-    modal.classList.remove('visible');
-    backdrop.classList.remove('visible');
-  }
-
-  getUserInput() {
-    const projectTitle = document.getElementById('title').value;
-    const projectSummary = document.getElementById('summary').value;
-    const projectExtraInfo = document.getElementById('extra-info').value;
-
-    this.renderNewProject(projectTitle, projectSummary, projectExtraInfo);
-  }
-
-  saveButtonHandler() {
-    const modal = document.getElementById('modal');
-    const saveButton = modal.querySelector('button:first-of-type');
-
-    saveButton.addEventListener('click', () => {
-      this.getUserInput();
-      this.closeModal();
-    });
-  }
-
-  renderNewProject(title, summary, info) {
-    const newProjectElement = document.createElement('li');
-    newProjectElement.classList.add('card');
-    newProjectElement.setAttribute('data-extra-info', info);
-    newProjectElement.innerHTML = `
-      <h2>${title}</h2>
-      <p>${summary}</p>
-      <button class="alt">More Info</button>
-      <button>Finish</button>
-    `;
-
-    this.addProject(newProjectElement);
-  }
-}
-
 class App {
   static init() {
-    new NewProject('active');
-
     const activeProjectsList = new ProjectList('active');
     const finishedProjectsList = new ProjectList('finished');
     activeProjectsList.setSwitchHandlerFunction(
