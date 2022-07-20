@@ -7,6 +7,11 @@
     <title>Share a Place</title>
     <link rel="stylesheet" href="assets/styles/app.css" />
     <link rel="stylesheet" href="assets/styles/share-place.css" />
+    <script
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc5U80UzUBM7LXANogksi6fudFw_TwLaU"
+    ></script>
+
     <script src="assets/scripts/SharePlace.js" defer></script>
   </head>
   <body>
@@ -26,20 +31,12 @@
 
     <section id="selected-place">
       <div id="map">
-        <p>
-          You haven't selected any place yet. Please enter an address or locate
-          yourself!
-        </p>
+        <p>You haven't selected any place yet. Please enter an address or locate yourself!</p>
       </div>
     </section>
 
     <section id="share-controls">
-      <input
-        id="share-link"
-        type="text"
-        readonly
-        value="Select a place to get a sharable link."
-      />
+      <input id="share-link" type="text" readonly value="Select a place to get a sharable link." />
       <button id="share-btn" disabled>Share Place</button>
     </section>
 
