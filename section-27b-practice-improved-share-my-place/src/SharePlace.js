@@ -63,11 +63,11 @@ class PlaceFinder {
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
-    this.sharedLinkInputElement.value = `${location.origin}/my-place?address=${encodeURI(
-      address
-    )}&lat=${coordinates.lat}&lng=${coordinates.lng}`;
-    this.shareBtn.disabled = false;
+      .then((data) => {
+        const locationId = data.locId;
+        this.sharedLinkInputElement.value = `${location.origin}/my-place?location=${locationId}`;
+        this.shareBtn.disabled = false;
+      });
   }
 
   async findAddressHandler(event) {

@@ -1,4 +1,4 @@
-const apiKey = 'AIzaSyCc5U80UzUBM7LXANogksi6fudFw_TwLaU';
+const apiKey = 'AIzaSyBj_6-9B4WXG79vC_n3ewy5teV9ruah-oY';
 
 export async function getCoordFromAddress(address) {
   const urlAddress = encodeURI(address);
