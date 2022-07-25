@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Components</title>
+
+    <script src="tooltip.js"></script>
+    <script src="confirm-link.js"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      /* css custom properties can also be used from within a component, like normal */
+      :root {
+        --clr-primary: rgb(0, 255, 255);
+        font-family: sans-serif;
+      }
+
+      /* slotted content can be styled in the 'light' dom, as shown here */
+      /* the alternative is to use ::slotted in the component file, but 'light' dom has higher specificity */
+      .bold {
+        font-weight: bold;
+      }
+
+      /* custom tag names can be used as selectors too */
+      my-tooltip {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <my-tooltip text="Web Components are a set of standards to provide reusable HTML elements!">
+      <span class="bold">Web Components are the best!</span>
+    </my-tooltip>
+    <hr />
+    <a is="my-confirm-link" href="https://www.google.com">Google</a>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="./modal.js" defer></script>
+
+    <title>Web Components II</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 2rem;
+        font-family: sans-serif;
+      }
+
+      button {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <my-modal>
+      <h1 slot="title">Please Confirm</h1>
+      <p>Some sample text that you need to check. Click confirm or cancel please :)</p>
+    </my-modal>
+    <p>Please confirm your choice</p>
+    <button id="confirm">Show details & confirm</button>
+
+    <script defer>
+      const modal = document.querySelector('my-modal');
+      const confirmButton = document.getElementById('confirm');
+
+      confirmButton.addEventListener('click', () => {
+        modal.open();
+      });
+    </script>
+  </body>
+</html>
